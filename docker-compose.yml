@@ -1,0 +1,17 @@
+version: '3.6'
+services:
+  iris:
+    build: 
+      context: .
+      dockerfile: Dockerfile
+    restart: always
+    ports: 
+      - 1972
+      - 32792:52773
+      - 53773
+      - 8888:8888
+      - 8080:8080
+    volumes:
+      - ./:/irisdev/app
+      - ./src:/opt/irisapp/src
+    command: -a "sh /opt/irisapp/server_start.sh"

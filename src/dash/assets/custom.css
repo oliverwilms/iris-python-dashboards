@@ -1,0 +1,16 @@
+* {
+  font-family: "Roboto", sans-serif;
+}
+
+body {
+  background: #f1f4fb;
+}
+
+.dash-block {
+  border: 1px solid transparent;
+  overflow: hidden;
+  border-radius: 10px;
+  box-shadow: rgba(149, 157, 165, 0.1) 0 8px 24px;
+  padding: 0;
+  height: 100%;
+}
