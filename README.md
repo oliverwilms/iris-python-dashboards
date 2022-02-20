@@ -34,3 +34,12 @@ On the left is the navigation menu.
 ## Overview
 
 ![image](https://user-images.githubusercontent.com/47400570/154855794-b573bc8a-5078-402c-aac9-e3adb55bb5a7.png)
+
+## Timeline
+
+![image](https://user-images.githubusercontent.com/47400570/154858243-fb1e714d-b18d-4245-a52b-aa0e7b660c50.png)
+
+## IRIS python usage
+
+![image](https://user-images.githubusercontent.com/47400570/154858265-665dfe69-2742-4e8b-852c-0fc9af121040.png)
+
