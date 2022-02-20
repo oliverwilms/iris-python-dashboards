@@ -15,7 +15,8 @@ COPY . /opt/irisapp
 COPY src/dash/assets /usr/irissys/bin/
 
 RUN iris start IRIS \
-	&& iris session IRIS < /opt/irisapp/iris.script && iris stop IRIS quietly
+	&& iris session IRIS < /opt/irisapp/iris.script \
+    && iris stop IRIS quietly
 
 ENV PYTHONPATH=/usr/irissys/bin/irispython
 ENV SRC_PATH=/opt/irisapp
