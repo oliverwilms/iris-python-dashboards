@@ -1,97 +1,101 @@
 import dash
-import dash_bootstrap_components as dbc
+import codecs
 import flask
-import iris
+import dash_bootstrap_components as dbc
 from dash import dcc
 from dash import html
 from dash.dependencies import Input, Output
-
-import dashboards.layout.indicators as indicators
-import dashboards.layout.topCountryByCases_bar as topCountryByCases_bar
-import dashboards.layout.totalTable as totalTable
-import dashboards.layout.worldmap as worldmap
-import dashboards.layout.piecases as piecases
+import sys
+sys.path.append('/opt/irisapp/src/dash/pages/page1')
+sys.path.append('/opt/irisapp/src/dash/pages/page2')
+import pages.page1.page as page1
+import pages.page2.page as page2
 
 # init server
 server = flask.Flask(__name__)
 app = dash.Dash(__name__, server=server, external_stylesheets=[dbc.themes.BOOTSTRAP])
-app.config.suppress_callback_exceptions = True
+# app.config.suppress_callback_exceptions = True
 
-# Set filter Country selector
-country_selector = dcc.Dropdown(
-    iris.sql.exec("select location from Data.Covid19 WHERE continent != ''").dataframe()['location'],
-    multi=True,
-    id='country_selector')
+# the style arguments for the sidebar. We use position:fixed and a fixed width
+SIDEBAR_STYLE = {
+    "position": "fixed",
+    "top": 0,
+    "left": 0,
+    "bottom": 0,
+    "width": "16rem",
+    "padding": "2rem 1rem",
+    "background-color": "#fff",
+}
 
-# Main layout
-app.layout = html.Div([
-    dbc.Row(html.H1("Covid19 analytics"), className='mb-1'),
-    # Filter
-    dbc.Row([
-        dbc.Col([
-            html.H6('Select country'),
-            html.Div(country_selector)
-        ], width=7)
-    ]),
+# the styles for the main content position it to the right of the sidebar and
+# add some padding.
+CONTENT_STYLE = {
+    "margin-left": "18rem",
+    "margin-right": "2rem",
+    "padding": "2rem 1rem",
+}
 
-    # Row 1 dashboards
-    dbc.Row([
-        # World map
-        dbc.Col([
-            dcc.Graph(id='worldmap-covid', className='dash-block')
-        ], width=7, style={'margin': '20px 0 0 0'}),
-
-        # Total table and indicators
-        dbc.Col([
-            dbc.Row(id='indicators', style={'height': '110px'}),
-            dbc.Row(dcc.Graph(id='total-table', className='dash-block'), style={
-                'padding': '0 5px 0 5px',
-                'bottom': '0',
-                'margin-top': '20px'
-            })
-        ], width=5, style={'margin': '20px 0 0 0'})
-
-    ], style={'height': '600px'}),
-
-    # Row 2 dashboards
-    dbc.Row([
-        dbc.Col(dcc.Graph(id='top-country-by-cases', className='dash-block'), width=7, style={'margin': '20px 0 0 0'}),
-        dbc.Col(dcc.Graph(id='pie-cases', className='dash-block'), width=5, style={
-            'margin': '20px 0 0 0',
-            'padding': '0 5px 0 5px'
-        })
-    ])
-],
-    style={
-        'margin': '30px'
-    }
+sidebar = html.Div(
+    [
+        html.H2("Dashboards", className="display-6"),
+        html.Hr(),
+        html.P(
+            "A simple sidebar layout with navigation links", className="lead"
+        ),
+        dbc.Nav(
+            [
+                dbc.NavLink("Overview", href="/", active="exact", external_link=True),
+                dbc.NavLink("Timeline", href="/page-1", active="exact", external_link=True),
+                dbc.NavLink("IRIS python usage", href="/page-2", active="exact", external_link=True),
+            ],
+            vertical=True,
+            pills=True,
+        ),
+    ],
+    style=SIDEBAR_STYLE,
 )
 
+content = html.Div(id="page-content", style=CONTENT_STYLE)
 
-# Callback Dashboards
-@app.callback(Output('top-country-by-cases', 'figure'), Input('country_selector', 'value'))
-def dash1(countries):
-    return topCountryByCases_bar.getFigure(countries)
+app.layout = html.Div([dcc.Location(id="url"), sidebar, content])
 
-
-@app.callback(Output('worldmap-covid', 'figure'), Input('country_selector', 'value'))
-def dash2(countries):
-    return worldmap.getFigure(countries)
+page1.set_callback(app)
 
 
-@app.callback(Output('total-table', 'figure'), Input('country_selector', 'value'))
-def dash3(countries):
-    return totalTable.getFigure(countries)
+@app.callback(Output("page-content", "children"), [Input("url", "pathname")])
+def render_page_content(pathname):
+
+    if pathname == "/":
+        return html.Div(page1.getLayout())
+    elif pathname == "/page-1":
+        return html.Div(page2.getLayout())
+    elif pathname == "/page-2":
+        return dbc.Row([
+            html.Iframe(src='/guide-embedded-jupyter', style={'width': '100%', 'height': '2190px'}, className='dash-block'),
+            html.Iframe(src='/guide-nativeapi-jupyter', className='dash-block', style={
+                'width': '100%', 
+                'height': '640px',
+                'margin-top': '20px'
+            })
+        ])
+
+    return dbc.Jumbotron(
+        [
+            html.H1("404: Not found", className="text-danger"),
+            html.Hr(),
+            html.P(f"The pathname {pathname} was not recognised..."),
+        ]
+    )
 
 
-@app.callback(Output('indicators', 'children'), Input('country_selector', 'value'))
-def dash4(countries):
-    return indicators.getFigure(countries)
+@app.server.route('/guide-embedded-jupyter')
+def get_guide_embedded_jupyter():
+    return codecs.open("/opt/irisapp/src/dash/pages/page3/guide-embedded-jupyter.html", 'r').read()
 
 
-@app.callback(Output('pie-cases', 'figure'), Input('country_selector', 'value'))
-def dash5(countries):
-    return piecases.getFigure(countries)
+@app.server.route('/guide-nativeapi-jupyter')
+def get_guide_nativeapi_jupyter():
+    return codecs.open("/opt/irisapp/src/dash/pages/page3/guide-nativeapi-jupyter.html", 'r').read()
 
 
 if __name__ == "__main__":

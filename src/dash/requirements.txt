@@ -6,3 +6,4 @@ dash-daq
 dash-bootstrap-components
 flask
 numpy
+openapi-codec
