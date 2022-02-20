@@ -34,6 +34,3 @@ COPY misc/kernels/irispython/* /home/irisowner/.local/share/jupyter/kernels/iris
 # Install Native API
 COPY misc/intersystems_irispython-3.2.0-py3-none-any.whl /usr/irissys/dev/python/intersystems_irispython-3.2.0-py3-none-any.whl
 RUN pip3 install /usr/irissys/dev/python/intersystems_irispython-3.2.0-py3-none-any.whl
-
-# WORKDIR ${SRC_PATH}/src/flask
-# RUN $PYTHON_PATH -m gunicorn --bind "0.0.0.0:8080" wsgi:app
