@@ -39,9 +39,6 @@ sidebar = html.Div(
     [
         html.H2("Dashboards", className="display-6"),
         html.Hr(),
-        html.P(
-            "A simple sidebar layout with navigation links", className="lead"
-        ),
         dbc.Nav(
             [
                 dbc.NavLink("Overview", href="/", active="exact", external_link=True),
