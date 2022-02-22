@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<title>Bootstrap Elegant Modal Login Modal Form with Icons</title>
+	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto|Varela+Round">
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+	<style>
+		body {
+			font-family: 'Varela Round', sans-serif;
+			background: #f1f4fb;
+		}
+
+		.modal{
+			display: flex;
+			justify-content: center;
+			align-items: center;
+		}
+
+		.modal-login {
+			color: #636363;
+			width: 350px;
+		}
+
+		.modal-login .modal-content {
+			padding: 20px;
+			border-radius: 5px;
+			border: none;
+			box-shadow: rgb(149 157 165 / 10%) 0 8px 24px;
+		}
+
+		.modal-login .modal-header {
+			border-bottom: none;
+			position: relative;
+			justify-content: center;
+		}
+
+		.modal-login h4 {
+			text-align: center;
+			font-size: 26px;
+		}
+
+		.modal-login .form-group {
+			position: relative;
+		}
+
+		.modal-login i {
+			position: absolute;
+			left: 13px;
+			top: 11px;
+			font-size: 18px;
+		}
+
+		.modal-login .form-control {
+			padding-left: 40px;
+		}
+
+		.modal-login .form-control,
+		.modal-login .btn {
+			min-height: 40px;
+			border-radius: 3px;
+		}
+
+		.modal-login .btn,
+		.modal-login .btn:active {
+			line-height: normal;
+		}
+	</style>
+	<style data-emotion="css"></style>
+</head>
+
+<body class="modal-open">
+
+	<!-- Modal HTML -->
+	<div id="myModal" class="modal fade show" aria-modal="true">
+		<div class="modal-dialog modal-login">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h4 class="modal-title">Login</h4>
+				</div>
+				<div class="modal-body">
+					<form>
+						<div class="form-group">
+							<i class="fa fa-user"></i>
+							<input name="username" type="text" class="form-control" placeholder="Username" required="required">
+							<div data-lastpass="true" class="css-6lfyyy">
+								<div data-lastpass-icon="true" class="css-1d019fe"></div>
+							</div>
+						</div>
+						<div class="form-group">
+							<i class="fa fa-lock"></i>
+							<input name="password" type="password" class="form-control" placeholder="Password" required="required">
+							<div data-lastpass="true" class="css-6lfyyy">
+								<div data-lastpass-icon="true" class="css-1d019fe"></div>
+							</div>
+						</div>
+						<div class="form-group">
+							<input type="submit" class="btn btn-primary btn-block btn-lg" value="Login">
+						</div>
+						<div class="error-alert"></div>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+	<script>
+		$('form').submit(function (e) {
+			e.preventDefault();
+
+			$.ajax({
+				url: "/login",
+				method: "POST",
+				data: $(this).serialize(),
+				success: function(){
+					window.location.href = "/";
+				},
+				error: function(){
+					$('.error-alert').text("Wrong login or password")
+				}
+			})
+		})
+	</script>
+</body>
+
+</html>

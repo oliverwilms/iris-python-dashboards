@@ -11,3 +11,17 @@ body {
   padding: 0;
   height: 100%;
 }
+
+.logout-btn{
+  color: #dc3545;
+}
+
+.logout-btn:hover{
+  background: #dc3545;
+  color: white;
+}
+
+.error-alert{
+  text-align: center;
+  color: #ef1212;
+}
