@@ -21,6 +21,10 @@ $ docker-compose up -d
 
 After installation open http://localhost:8080/
 
+After you will be redirected to the authorization page. Authorization is based on the IRIS database. Default login and password is _SYSTEM : SYS
+
+![image](https://user-images.githubusercontent.com/47400570/155238798-4c1ca3b2-e0b9-4ffd-a934-5922f10bb0d5.png)
+
 The main page will show the first dashboard, which visualizes Covid data taken from the local IRIS database
 
 On the left is the navigation menu.
@@ -35,13 +39,14 @@ Online demo link : http://atscale.teccod.ru:8080/
 
 ## Overview
 
-![image](https://user-images.githubusercontent.com/47400570/154855794-b573bc8a-5078-402c-aac9-e3adb55bb5a7.png)
+![image](https://user-images.githubusercontent.com/47400570/155239138-0f614bb0-1fc1-4e19-9b2a-553bc56c2112.png)
 
 ## Timeline
 
-![image](https://user-images.githubusercontent.com/47400570/154858243-fb1e714d-b18d-4245-a52b-aa0e7b660c50.png)
+![image](https://user-images.githubusercontent.com/47400570/155239097-a49ab95a-2b03-4170-a59b-8a5616be6962.png)
 
 ## IRIS python usage
 
-![image](https://user-images.githubusercontent.com/47400570/154858265-665dfe69-2742-4e8b-852c-0fc9af121040.png)
+![image](https://user-images.githubusercontent.com/47400570/155239038-99890fe8-ed9d-4a82-bfbe-21bf3d4cd80b.png)
+
 
