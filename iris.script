@@ -2,7 +2,6 @@
     Do ##class(App.Installer).setup()
     
     zn "IRISAPP"
-    Do $System.OBJ.LoadDir("/opt/irisapp/src","ck",,1)
     Do EnableDeepSee^%SYS.cspServer("/csp/irisapp/")
     zpm "load /opt/irisapp/ -v -Dfolder=irisapp"
     zpm "install csvgen"
