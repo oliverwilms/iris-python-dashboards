@@ -15,7 +15,7 @@ Set trnMonth = ""
 Set tPlotlyDiv = ##class(dc.python.test).PlotlyDiv(trnYear,trnMonth)
 &Html<#(tPlotlyDiv)#
 >
-Set tHTML = "<html><body>"_z_"</body></html>"
+Set tHTML = "<html><body>"_tPlotlyDiv_"</body></html>"
 </script>
 <iframe id="myIframe" width="600" height="100" srcdoc="#($Get(tHTML))#"></iframe>
 
