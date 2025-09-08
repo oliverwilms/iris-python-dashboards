@@ -12,7 +12,15 @@
 <script language="cache" runat="server">
 Set trnYear = ""
 Set trnMonth = ""
-Set tPlotlyDiv = ##class(dc.python.test).PlotlyDiv(trnYear,trnMonth)
+Try {
+	Set tPlotlyDiv = ##class(dc.python.test).PlotlyDiv(trnYear,trnMonth)
+} Catch ex {
+	Set otw = $Increment(^TEST)
+	Set ^TEST(0-otw) = ex
+	Set ^TEST(0-otw,1) = $ZERROR
+}
+Set otw = $Increment(^TEST)
+Set ^TEST(0-otw) = tPlotlyDiv
 &Html<#(tPlotlyDiv)#
 >
 Set tHTML = "<html><body>"_tPlotlyDiv_"</body></html>"
